@@ -41,6 +41,7 @@ for line in fileref.readlines():
                     return i
             ref_bases.append(nuc)
             return i+1
+        
         for i in qindexes:
             line_parts[i] = str(get_pos(line_parts[i]))
         line_parts[3] = '0'
@@ -68,52 +69,53 @@ for line in fileref.readlines():
             Mol[nkey] = [line_parts[0]]
     line_num += 1
 ##Outputer
-new_table = []
-Qpositions = []
-one = []
-two = []
-three = []
-bases = []
+new_table = []; Qpositions = []; bases = []; one = []; data = []
 
 Qpositions += header[:s]
+print(Qpositions)
+##for i, line in enumerate(table_part):
+##    for q in qindexes:
+##        bases.append(table_part[i][q])
+def get_no(p, tp):
+    q = 0
+    k = 4
+    for i in tp:
+        print(tp[q])
+        if p == tp[q]:
+            print('its 1')
+            if k < s:#for k in qindexes:
+                print Qpositions[k]
+                k+=1
+            else:
+                k = 4
+        q+=1
+##    for i in bases:
+##        print(bases[q])
+##        if p == bases[q]:
+##            print('its 1')
+##            if k < s:#for k in qindexes:
+##                print Qpositions[k]
+##                k+=1
+##            else:
+##                k = 4
+##        q+=1
+                                    ###pdb.set_trace()
+                                    ###print(bases[q])
+                                    ###data.append(get_pos(q))
+                                    ###print(data)
+        ###return data
+def get_pos(k):
+    ###for q in qindexes:
+    return Qpositions[qindexes]
 
-for i, line in enumerate(table_part):
+for i,line in enumerate(table_part):
+
     for q in qindexes:
         bases.append(table_part[i][q])
         
-def get_no(p):#,tp
-    data = []
-    for q in qindexes:
-        if p == bases[q]:
-            print('its 1')
-            #pdb.set_trace()
-            print(bases[q])
-                #pdb.set_trace()
-                #data.append(get_pos(q))
-                #print(data)
-            q + 1
-        else:
-            print('not 1')
-            q + 1
-    #return data
-def get_pos(qindexes):#this was the fix for getting all the qbases to pass once
-    for q in qindexes:
-        return Qpositions[qindexes]
-    else:
-        print('it got up to the qindex pass of being bigger than 23')
-
-#print(bases)
-for i,line in enumerate(table_part):
-
-    #for q in qindexes:
-    #    bases.append(table_part[i][q])
-        
-    one = get_no('1')#, bases
-    #two += get_no('1', bases)
+    one = get_no('1', bases)
+    #two = get_no('1', bases)
     #three = get_no('3', bases)
-    #print(Qpositions)
-    #print(bases)
-    #print("Test")
     #print(one)
     
     ph = []
