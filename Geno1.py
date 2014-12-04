@@ -3,7 +3,6 @@ import string
 from collections import Counter
 from sys import argv
 import pdb
-
 #script, filename = argv[1], filename2 = argv[2]
 #fileref = open(filename, 'r')
 #fh = open(filename2, 'w')
@@ -48,9 +47,7 @@ for line in fileref.readlines():
         s = count + 4
         sorted(line_parts[3:s])
 #        line_parts.sort(key=lambda x: x[2])
-#        pdb.set_trace()
-        table_part.append(line_parts)
-#        pdb.set_trace()
+        table_part.append(line_parts)#converted table
 ##Table count
         obj = "".join(line_parts[3:s])
         if table.has_key(obj):
@@ -69,12 +66,6 @@ for line in fileref.readlines():
             Mol[nkey].append(line_parts[0])
         else:
             Mol[nkey] = [line_parts[0]]
-########Character Group
-#        ordered_list = reduce(lambda x,y:x+y, map(lambda N:[''.join(x) for x in itertools.product(string.lowercase, repeat=N)], range(1,4)))#adding unicode
-#        if CG.has_key(nkey):
-#            CG[nkey].append(ordered_list[0])
-#        else:
-#            CG[nkey] = [ordered_list[0]]
     line_num += 1
 ##Outputer
 new_table = []
@@ -82,31 +73,42 @@ Qpositions = []
 one = []
 two = []
 three = []
+bases = []
 
 Qpositions += header[:s]
-def get_no(p,tp):
-    data = []
-    for q in qindexes:
-        if p == tp[q]:
-            print(tp[q])
-            data.append(get_pos(q))
-            print(data)
-            q += 1
-        else:
-            return q+1
-    return data
-def get_pos(qindexes):
-    return Qpositions[qindexes]
 
-for i,line in enumerate(table_part):
-
-    bases = []
+for i, line in enumerate(table_part):
     for q in qindexes:
         bases.append(table_part[i][q])
         
-    print(bases)
-    print(Qpositions)
-    one = get_no('1', bases)
+def get_no(p):#,tp
+    data = []
+    for q in qindexes:
+        if p == bases[q]:
+            print('its 1')
+            #pdb.set_trace()
+            print(bases[q])
+                #pdb.set_trace()
+                #data.append(get_pos(q))
+                #print(data)
+            q + 1
+        else:
+            print('not 1')
+            q + 1
+    #return data
+def get_pos(qindexes):#this was the fix for getting all the qbases to pass once
+    for q in qindexes:
+        return Qpositions[qindexes]
+    else:
+        print('it got up to the qindex pass of being bigger than 23')
+
+#print(bases)
+for i,line in enumerate(table_part):
+
+    #for q in qindexes:
+    #    bases.append(table_part[i][q])
+        
+    one = get_no('1')#, bases
     #two += get_no('1', bases)
     #three = get_no('3', bases)
     #print(Qpositions)
@@ -123,7 +125,6 @@ for i,line in enumerate(table_part):
     ph = ["C." + str(cnt), "ref:%s" % '_'.join(r), "Molecule:%s" % '_'.join(M),]#"Headers w 1:" % '_'.join(one), "Headers w 2:" % '_'.join(two), "Headers w 3:" % '_'.join(three)]
     nl = line[0:s] + ph + line[s+1:]
     new_table.append(nl)
-
 #for line in new_table:
 #    print('\t'.join(line))
 
@@ -134,3 +135,10 @@ for i,line in enumerate(table_part):
 #    fh.write(l+'\n')#prints out the wrapper for line_parts
 #fh.close()
 #fileref.close()
+
+########Character Group not working
+#        ordered_list = reduce(lambda x,y:x+y, map(lambda N:[''.join(x) for x in itertools.product(string.lowercase, repeat=N)], range(1,4)))#adding unicode
+#        if CG.has_key(nkey):
+#            CG[nkey].append(ordered_list[0])
+#        else:
+#            CG[nkey] = [ordered_list[0]]
