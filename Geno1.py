@@ -70,39 +70,31 @@ for line in fileref.readlines():
     line_num += 1
 ##Outputer
 new_table = []; Qpositions = []; bases = []; one = []; data = []
-
 Qpositions += header[:s]
+
 print(Qpositions)
-##for i, line in enumerate(table_part):
-##    for q in qindexes:
-##        bases.append(table_part[i][q])
+
 def get_no(p, tp):
-    q = 0
-    k = 4
+    q = 0; k = 4
     for i in tp:
         print(tp[q])
         if p == tp[q]:
             print('its 1')
-            if k < s:#for k in qindexes:
-                print Qpositions[k]
-                k+=1
-            else:
-                k = 4
+#            if k < s:#for k in qindexes:
+            print Qpositions[k]
+            k+=1
+            if k == s:
+                k=4
+        else:
+            print('NA')
+            k+=1
+#            else:
+#                k = 4
         q+=1
-##    for i in bases:
-##        print(bases[q])
-##        if p == bases[q]:
-##            print('its 1')
-##            if k < s:#for k in qindexes:
-##                print Qpositions[k]
-##                k+=1
-##            else:
-##                k = 4
-##        q+=1
-                                    ###pdb.set_trace()
-                                    ###print(bases[q])
-                                    ###data.append(get_pos(q))
-                                    ###print(data)
+                ###pdb.set_trace()
+                ###print(bases[q])
+                ###data.append(get_pos(q))
+                ###print(data)
         ###return data
 def get_pos(k):
     ###for q in qindexes:
@@ -114,7 +106,7 @@ for i,line in enumerate(table_part):
         bases.append(table_part[i][q])
         
     one = get_no('1', bases)
-    #two = get_no('1', bases)
+    #two = get_no('2', bases)
     #three = get_no('3', bases)
     #print(one)
     
