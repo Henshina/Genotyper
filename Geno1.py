@@ -69,27 +69,29 @@ for line in fileref.readlines():
     line_num += 1
 ##Outputer
 new_table = []; Qpositions = []; bases = []; one = []; data = []
-Qpositions += header[:s]
+Qpositions = header[4:s]
 
 #print(Qpositions)
 
 def get_no(p, tp):
-    q = 0; k = 4
-    for i in tp:
+    q = 0; k = 0
+    for j in tp:
         #print(tp[q])
         if p == tp[q]:
             #print('its 1')
-            data.append(Qpositions[k])#print Qpositions[k]
+            data.append(Qpositions[k])
+            pdb.set_trace()
             k+=1
             if k == s:
-                k=4
+                k=0
         else:
-            print('NA')
+            data.append('NA')
             k+=1
         q+=1
-    pdb.set_trace()
+    #pdb.set_trace()
+    #print(data)
     return(data)
-            ###pdb.set_trace()
+    ###pdb.set_trace()
 
 for i,line in enumerate(table_part):
 
