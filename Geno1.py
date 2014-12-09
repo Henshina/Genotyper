@@ -44,8 +44,7 @@ for line in fileref.readlines():
         
         for i in qindexes:
             line_parts[i] = str(get_pos(line_parts[i]))
-        line_parts[3] = '0'
-        s = count + 4
+        line_parts[3] = '0'; s = count + 4
         sorted(line_parts[3:s])
 #        line_parts.sort(key=lambda x: x[2])
         table_part.append(line_parts)#converted table
@@ -72,33 +71,25 @@ for line in fileref.readlines():
 new_table = []; Qpositions = []; bases = []; one = []; data = []
 Qpositions += header[:s]
 
-print(Qpositions)
+#print(Qpositions)
 
 def get_no(p, tp):
     q = 0; k = 4
     for i in tp:
-        print(tp[q])
+        #print(tp[q])
         if p == tp[q]:
-            print('its 1')
-#            if k < s:#for k in qindexes:
-            print Qpositions[k]
+            #print('its 1')
+            data.append(Qpositions[k])#print Qpositions[k]
             k+=1
             if k == s:
                 k=4
         else:
             print('NA')
             k+=1
-#            else:
-#                k = 4
         q+=1
-                ###pdb.set_trace()
-                ###print(bases[q])
-                ###data.append(get_pos(q))
-                ###print(data)
-        ###return data
-def get_pos(k):
-    ###for q in qindexes:
-    return Qpositions[qindexes]
+    pdb.set_trace()
+    return(data)
+            ###pdb.set_trace()
 
 for i,line in enumerate(table_part):
 
