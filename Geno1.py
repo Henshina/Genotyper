@@ -71,7 +71,7 @@ for line in fileref.readlines():
 new_table = []; Qpositions = []; bases = []; one = []; data = []
 Qpositions = header[4:s]
 
-#print(Qpositions)
+print(Qpositions)
 
 def get_no(p, tp):
     q = 0; k = 0
@@ -80,9 +80,9 @@ def get_no(p, tp):
         if p == tp[q]:
             #print('its 1')
             data.append(Qpositions[k])
-            pdb.set_trace()
+            #pdb.set_trace()
             k+=1
-            if k == s:
+        if k == s:
                 k=0
         else:
             data.append('NA')
@@ -90,7 +90,7 @@ def get_no(p, tp):
         q+=1
     #pdb.set_trace()
     #print(data)
-    return(data)
+    #return(data)
     ###pdb.set_trace()
 
 for i,line in enumerate(table_part):
