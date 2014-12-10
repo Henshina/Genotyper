@@ -71,27 +71,11 @@ for line in fileref.readlines():
 new_table = []; Qpositions = []; bases = []; one = []; data = []
 Qpositions = header[4:s]
 
-print(Qpositions)
-
 def get_no(p, tp):
-    q = 0; k = 0
-    for j in tp:
-        #print(tp[q])
+    for q in range(0, len(tp)):
         if p == tp[q]:
-            #print('its 1')
-            data.append(Qpositions[k])
-            #pdb.set_trace()
-            k+=1
-        if k == s:
-                k=0
-        else:
-            data.append('NA')
-            k+=1
-        q+=1
-    #pdb.set_trace()
-    #print(data)
-    #return(data)
-    ###pdb.set_trace()
+            data.append(str(Qpositions[q]))
+    return(data)
 
 for i,line in enumerate(table_part):
 
@@ -99,8 +83,8 @@ for i,line in enumerate(table_part):
         bases.append(table_part[i][q])
         
     one = get_no('1', bases)
-    #two = get_no('2', bases)
-    #three = get_no('3', bases)
+    two = get_no('2', bases)
+    three = get_no('3', bases)
     #print(one)
     
     ph = []
@@ -109,20 +93,22 @@ for i,line in enumerate(table_part):
     r = RB[nucleotide]
     M = Mol[nucleotide]
     
-    ph = ["C." + str(cnt), "ref:%s" % '_'.join(r), "Molecule:%s" % '_'.join(M),]#"Headers w 1:" % '_'.join(one), "Headers w 2:" % '_'.join(two), "Headers w 3:" % '_'.join(three)]
+    ph = ["C." + str(cnt), "ref:%s" % '_'.join(r), "Molecule:%s" % '_'.join(M),"Headers w 1: %s" % '_'.join(one), "Headers w 2: %s" % '_'.join(two), "Headers w 3: %s" % '_'.join(three)]
     nl = line[0:s] + ph + line[s+1:]
     new_table.append(nl)
+    bases=[]
 #for line in new_table:
 #    print('\t'.join(line))
 
 ##Writer
 #print len(header)
-#fh.write(y + '\n')#prints out the header array and makes a break to the next line
-#for i,l in enumerate(table_part):
-#    fh.write(l+'\n')#prints out the wrapper for line_parts
-#fh.close()
-#fileref.close()
+fh.write(y + '\n')#prints out the header array and makes a break to the next line
+for i,l in enumerate(new_table):
+    fh.write('\t'.join(l)+'\n')#prints out the wrapper for line_parts
+fh.close()
+fileref.close()
 
+#pdb.set_trace()
 ########Character Group not working
 #        ordered_list = reduce(lambda x,y:x+y, map(lambda N:[''.join(x) for x in itertools.product(string.lowercase, repeat=N)], range(1,4)))#adding unicode
 #        if CG.has_key(nkey):
