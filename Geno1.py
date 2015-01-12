@@ -1,15 +1,16 @@
-import itertools
+import itertools, argparse
 import string
 from collections import Counter
 from sys import argv
 import pdb
-#script, filename = argv[1], filename2 = argv[2]
-#fileref = open(filename, 'r')
-#fh = open(filename2, 'w')
 
-fileref = open("Phages.txt","r"); fh = open("GENOS.txt", "w")
-#ids = [] #for the letter increment
+fileref = open("sorted_table_2.txt","r"); fh = open("GENOS.txt", "w")
+##Table and Nucleotide Lists
 line_num = 0; header = []; table_part = []; qindexes = []; lister=[]; table= {}; ref_table=[]; old_table=[]; RB= {}; Mol={}; CG={}
+##Outputer lists
+new_table = []; Qpositions = []; bases = []; one = []; data = []; data2 = []; data3 = []
+##GT_Num Lists
+match = []; gt = []; patternum = 1
 
 for line in fileref.readlines():
     if line_num == 0:        
@@ -46,7 +47,6 @@ for line in fileref.readlines():
             line_parts[i] = str(get_pos(line_parts[i]))
         line_parts[3] = '0'; s = count + 4
         sorted(line_parts[3:s])
-#        line_parts.sort(key=lambda x: x[2])
         table_part.append(line_parts)#converted table
 ##Table count
         obj = "".join(line_parts[3:s])
@@ -66,16 +66,30 @@ for line in fileref.readlines():
             Mol[nkey].append(line_parts[0])
         else:
             Mol[nkey] = [line_parts[0]]
+##Numerical GT
+        groups = {}
+        for i,k in enumerate(table.keys()):
+            groups[k] = i
     line_num += 1
-##Outputer
-new_table = []; Qpositions = []; bases = []; one = []; data = []
+##Output
 Qpositions = header[4:s]
-
 def get_no(p, tp):
     for q in range(0, len(tp)):
         if p == tp[q]:
             data.append(str(Qpositions[q]))
     return(data)
+
+def get_no2(p, tp):
+    for q in range(0, len(tp)):
+        if p == tp[q]:
+            data2.append(str(Qpositions[q]))
+    return(data2)
+
+def get_no3(p, tp):
+    for q in range(0, len(tp)):
+        if p == tp[q]:
+            data3.append(str(Qpositions[q]))
+    return(data3)
 
 for i,line in enumerate(table_part):
 
@@ -83,35 +97,30 @@ for i,line in enumerate(table_part):
         bases.append(table_part[i][q])
         
     one = get_no('1', bases)
-    two = get_no('2', bases)
-    three = get_no('3', bases)
-    #print(one)
+    two = get_no2('2', bases)
+    three = get_no3('3', bases)
     
     ph = []
     nucleotide = ''.join(line[3:s])
     cnt = table[nucleotide]
+    g = str(groups[nucleotide])
     r = RB[nucleotide]
     M = Mol[nucleotide]
-    
-    ph = ["C." + str(cnt), "ref:%s" % '_'.join(r), "Molecule:%s" % '_'.join(M),"Headers w 1: %s" % '_'.join(one), "Headers w 2: %s" % '_'.join(two), "Headers w 3: %s" % '_'.join(three)]
+    ph = ["Group: %s" % '_'.join(g), "C." + str(cnt), "ref:%s" % '_'.join(r), "Molecule:%s" % '_'.join(M),"1: %s" % '_'.join(one), "2: %s" % '_'.join(two), "3: %s" % '_'.join(three)]
     nl = line[0:s] + ph + line[s+1:]
     new_table.append(nl)
     bases=[]
-#for line in new_table:
-#    print('\t'.join(line))
+    data=[]
+    data2=[]
 
-##Writer
-#print len(header)
-fh.write(y + '\n')#prints out the header array and makes a break to the next line
+#Writer
+bloom = ["Count", "Reference Positions", "Molecule Number", "Headers With 1", "Headers With 2", "Headers With 3"]
+hd=header
+new_header = hd[:s] + bloom + hd[s:]
+nh = str(new_header)
+
+fh.write(nh + '\n')#prints out the header and breaks to the next line
 for i,l in enumerate(new_table):
     fh.write('\t'.join(l)+'\n')#prints out the wrapper for line_parts
 fh.close()
 fileref.close()
-
-#pdb.set_trace()
-########Character Group not working
-#        ordered_list = reduce(lambda x,y:x+y, map(lambda N:[''.join(x) for x in itertools.product(string.lowercase, repeat=N)], range(1,4)))#adding unicode
-#        if CG.has_key(nkey):
-#            CG[nkey].append(ordered_list[0])
-#        else:
-#            CG[nkey] = [ordered_list[0]]
